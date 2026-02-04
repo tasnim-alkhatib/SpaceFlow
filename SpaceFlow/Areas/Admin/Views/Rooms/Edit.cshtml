@@ -1,0 +1,78 @@
+﻿@model SpaceFlow.Web.Areas.Admin.Models.RoomFormViewModel
+
+@{
+    ViewData["Title"] = "Edit Room";
+}
+
+
+<div class="container py-5">
+    <h2 class="fw-bold text-dark">Edit Room: @Model.Name</h2>
+
+    <div class="card border-0 shadow-lg rounded-4 overflow-hidden bg-white">
+        <div class="row g-0 align-items-center">
+            
+            <div class="col-md-6 bg-light d-flex flex-column align-items-center justify-content-center p-0 align-self-stretch">
+                <div class="text-center w-100 p-4">
+                    <p class="text-muted mb-3 fw-bold">Current Image</p>
+                    <img src="/images/rooms/@Model.ImageUrl"
+                         class="img-fluid rounded-3 shadow-sm"
+                         style="height: 350px; width: 100%; object-fit: cover;"
+                         onerror="this.src='/images/rooms/default-room.jpg'" />
+                </div>
+            </div>
+
+            <div class="col-md-6 p-5">
+                <form asp-action="Edit" asp-route-roomId="@Model.Id" method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="ImageUrl" />
+
+                    <div class="mb-4">
+                        <label asp-for="Name" class="form-label fw-bold"></label>
+                        <input asp-for="Name" class="form-control form-control-lg" placeholder="Room Name" />
+                        <span asp-validation-for="Name" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Description" class="form-label fw-bold"></label>
+                        <input asp-for="Description" class="form-control form-control-lg" placeholder="Description" />
+                        <span asp-validation-for="Description" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="PricePerHour" class="form-label fw-bold"></label>
+                        <input asp-for="PricePerHour" class="form-control form-control-lg" placeholder="PricePerHour" />
+                        <span asp-validation-for="PricePerHour" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Capacity" class="form-label fw-bold"></label>
+                        <input asp-for="Capacity" class="form-control form-control-lg" placeholder="Capacity" />
+                        <span asp-validation-for="Capacity" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Image" class="form-label fw-bold">Update Room Image</label>
+                        <input asp-for="Image" type="file" class="form-control" />
+                        <small class="text-muted">Leave empty to keep the current image.</small>
+                    </div>
+
+                    <div class="col-md-12 d-flex gap-3 mt-4">
+                        <button type="submit" class="btn btn-outline-success rounded-pill px-3 flex-grow-1 shadow fw-bold">
+                            <i class="bi bi-check-lg me-1"></i> Update
+                        </button>
+                        <a asp-action="Index" class="btn btn-outline-danger rounded-pill px-3">
+                            Cancel
+                        </a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

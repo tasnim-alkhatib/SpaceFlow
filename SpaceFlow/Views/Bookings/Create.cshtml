@@ -1,0 +1,114 @@
+﻿@model SpaceFlow.Web.ViewModels.BookingViewModel
+
+@{
+    ViewData["Title"] = "Secure Booking";
+}
+
+<div class="container-fluid px-lg-5 py-5">
+    <div class="row justify-content-center g-5">
+
+        @* card of room's photo *@
+        <div class="col-lg-4 order-lg-2" style="margin-top: 160px; margin-left : 50px;">
+            <div class="card border-0 shadow-lg rounded-5 overflow-hidden sticky-lg-top" style="top: 100px;">
+                <img src="~/images/rooms/@Model.RoomImageUrl" class="card-img-top" style="height: 200px; object-fit: cover;" alt="@Model.RoomName">
+                <div class="card-body p-4 text-center">
+                    <span class="badge bg-primary-soft text-primary rounded-pill px-3 py-2 mb-3">Selected Space</span>
+                    <h3 class="fw-bold text-dark mb-2">@Model.RoomName</h3>
+                    <p class="text-muted small mb-4">
+                        <i class="bi bi-geo-alt-fill me-1"></i> Premium Business District
+                    </p>
+
+                    <div class="bg-light rounded-4 p-3 d-flex justify-content-between align-items-center">
+                        <div class="text-start">
+                            <p class="text-muted mb-0 small">Price Per Hour</p>
+                            <h5 class="fw-bold mb-0">@Model.PricePerHour LE</h5>
+                        </div>
+                        <i class="bi bi-lightning-charge-fill text-warning fs-3"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 order-lg-1">
+            <div class="mb-5">
+                <h1 class="display-5 fw-bold text-dark mb-2">Book Your Space</h1>
+                <p class="text-muted fs-5">Secure your spot in just a few clicks.</p>
+            </div>
+
+            <form asp-action="Create" method="post" class="needs-validation"
+                  hx-post="/Bookings/GetPrice"
+                  hx-trigger="change from:input"
+                  hx-target="#price-result"
+                  hx-swap="innerHTML">
+
+                <input type="hidden" asp-for="RoomId" />
+                <input type="hidden" asp-for="PricePerHour" name="PricePerHour" /> 
+
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded-4 border-0 shadow-sm mb-4">
+                    <i class="bi bi-exclamation-octagon-fill me-2"></i>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-12">
+                        <div class="p-4 bg-white shadow-sm rounded-4 border border-light">
+                            <label class="fw-bold text-dark mb-3"><i class="bi bi-calendar-check me-2 text-primary"></i>When do you start?</label>
+                            <div class="form-floating">
+                                <input asp-for="StartTime" type="datetime-local" step="60" class="form-control border-0 bg-light" />
+                                <label asp-for="StartTime">Start Date and Time</label>
+                                <span asp-validation-for="StartTime" class="text-danger small"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="p-4 bg-white shadow-sm rounded-4 border border-light">
+                            <label class="fw-bold text-dark mb-3"><i class="bi bi-calendar-x me-2 text-primary"></i>When do you finish?</label>
+                            <div class="form-floating">
+                                <input asp-for="EndTime" type="datetime-local" step="60" class="form-control border-0 bg-light" />
+                                <label asp-for="EndTime">End Date and Time</label>
+                                <span asp-validation-for="EndTime" class="text-danger small"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="alert alert-dismissible alert-light rounded-4 border border-light">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="mb-0 text-muted small">Total Cost Estimate</p>
+                                    <h5 id="price-result" class="fw-bold mb-0 text-dark">0.00 LE</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 d-flex gap-3 mt-4">
+                        <button type="submit" class="btn btn-outline-success rounded-pill px-3 flex-grow-1 shadow fw-bold">
+                            Confirm My Booking
+                        </button>
+                        <a asp-controller="Home" asp-action="BrowseSpaces" class="btn btn-outline-danger rounded-pill px-3">
+                            Cancel
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    .bg-primary-soft {
+        background-color: rgba(13, 110, 253, 0.1);
+    }
+
+    .form-control:focus {
+        background-color: #fff !important;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+        border: 1px solid #0d6efd !important;
+    }
+</style>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

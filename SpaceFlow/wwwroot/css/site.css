@@ -1,0 +1,53 @@
+.custom-nav {
+    /* Slightly darker than the standard #f8f9fa background */
+    background-color: rgba(232, 235, 239, 0.95) !important;
+    /* Modern glass effect (Glassmorphism) */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    /* Smooth border at the bottom for definition */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    /* Ensures the navbar stays above all other page content */
+    z-index: 1030;
+    /* Vertical padding for a more spacious feel */
+    padding: 0.7rem 0;
+}
+
+/* Optional: Slight shadow adjustment to match the Morph theme */
+.shadow-sm {
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.045) !important;
+}
+
+/* Apply Lato font to the entire body of the website */
+body {
+    font-family: 'Lato', sans-serif;
+    font-weight: 400; /* Standard weight */
+}
+
+/* You can use the other font for headings to make them stand out */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'SN Pro', sans-serif;
+    font-weight: 700; /* Bold weight */
+}
+
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}

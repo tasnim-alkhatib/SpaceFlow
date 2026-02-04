@@ -1,0 +1,60 @@
+﻿@model SpaceFlow.Web.Areas.Admin.Models.RoomFormViewModel
+
+@{
+    ViewData["Title"] = "Create Room";
+}
+
+<div class="container py-5">
+
+<h2 class="fw-bold text-dark">Create New Room</h2>
+<hr />
+
+<div class="row">
+    <div class="col-12">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="PricePerHour" class="form-label"></label>
+                <input asp-for="PricePerHour" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Capacity" class="form-label"></label>
+                <input asp-for="Capacity" class="form-control" />
+            </div>
+
+            <div class="mb-3 mt-3">
+                <label asp-for="Image" class="form-label">Room Image</label>
+                <input asp-for="Image" type="file" class="form-control" />
+            </div>
+
+            
+            <div class="col-md-12 d-flex gap-3 mt-4">
+                <button type="submit" class="btn btn-outline-success rounded-pill px-3 flex-grow-1 shadow fw-bold">
+                        Save Room
+                </button>
+                <a asp-action="Index" class="btn btn-outline-danger rounded-pill px-3">
+                    Back to List
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,56 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="container-fluid px-5 mt-5 py-5">
+    <div class="row align-items-center">
+
+        <div class="col-lg-6 text-start">
+            <h1 class="display-3 fw-bold text-primary mb-4" style="font-family: 'SN Pro', sans-serif;">SpaceFlow</h1>
+            <p class="text-dark fs-4 lh-base fw-normal mb-5" style="font-family: 'SN Pro', sans-serif; opacity: 0.9;">
+                Workspace management made easy.<br>
+                Discover the perfect environment for your creativity and book instantly.
+            </p>
+
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="col-md-12 d-flex gap-5 mt-4">
+                <a asp-area="Admin" asp-controller="Bookings" asp-action="Index" class="btn btn-outline-primary btn-lg rounded-pill px-5 shadow-lg">
+                    System Bookings
+                </a>
+                <a asp-area="Admin" asp-controller="Rooms" asp-action="Index" class="btn btn-outline-light btn-lg rounded-pill px-5 shadow-lg">
+                    Manage Rooms
+                </a>
+                </div>
+            }
+            else
+            {
+                <a asp-controller="Home" asp-action="BrowseSpaces" class="btn btn-primary btn-lg rounded-pill px-5 shadow-lg">
+                    Book Now
+                </a>
+            }
+        </div>
+
+        <div class="col-lg-6 mt-5 mt-lg-0">
+            <div class="position-relative">
+                <img src="~/images/rooms/HomePhoto.png" 
+                     loading="lazy" 
+                     class="img-fluid rounded-5 shadow-lg w-100"
+                     style="object-fit: cover; min-height: 400px;"
+                     alt="Office Space">
+
+                @* <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80"
+                     class="img-fluid rounded-5 shadow-lg w-100"
+                     style="object-fit: cover; min-height: 400px;"
+                     alt="Office Space"> *@
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
