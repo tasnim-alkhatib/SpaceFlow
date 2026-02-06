@@ -1,5 +1,5 @@
 ﻿@using SpaceFlow.Core.Enums
-@model IEnumerable<SpaceFlow.Core.Entities.Booking>
+@model IEnumerable<SpaceFlow.Core.Dtos.BookingDto>
 
 @{
     ViewData["Title"] = "My Dashboard";
@@ -45,8 +45,7 @@
                                 <td class="ps-4">
                                     <div class="d-flex align-items-center">
                                         <div class="ms-3">
-                                            <h6 class="fw-bold mb-0">@booking.Room.Name</h6>
-                                            <small class="text-muted">ID: #@booking.Id</small>
+                                            <h6 class="fw-bold mb-0">@booking.RoomName</h6>
                                         </div>
                                     </div>
                                 </td>

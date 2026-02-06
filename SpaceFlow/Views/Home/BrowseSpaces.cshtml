@@ -7,38 +7,71 @@
 <div class="container mt-5">
     <h2 class="text-center mb-4 border-bottom pb-3">Find Your Perfect Spot</h2>
 
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        @foreach (var room in Model)
-        {
-            <div class="col">
-                <div class="card h-100 shadow-sm border-0 transition-hover">
-                    <img src="~/images/rooms/@room.ImageUrl" loading="lazy" class="card-img-top" alt="@room.Name" style="height: 200px; object-fit: cover;">
+    <div id="rooms-container">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var room in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0 transition-hover">
+                        <img src="~/images/rooms/@room.ImageUrl" class="card-img-top" alt="@room.Name" style="height: 200px; object-fit: cover;">
 
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <h5 class="card-title mb-0">@room.Name</h5>
-                            <span class="badge bg-success">@room.PricePerHour EGP/hr</span>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h5 class="card-title mb-0">@room.Name</h5>
+                                <span class="badge bg-success">@room.PricePerHour EGP/hr</span>
+                            </div>
                         </div>
-                        @* <p class="card-text text-muted small">@room.Description</p> *@
-                    </div>
 
-                    <div class="card-footer border-0 d-grid pb-3">
-                        <a asp-controller="Rooms" asp-action="Details" asp-route-id="@room.id" class="btn btn-outline-dark py-2 rounded-pill">View Details</a>
+                        <div class="card-footer border-0 d-grid pb-3">
+                            <a asp-controller="Rooms" asp-action="Details" asp-route-id="@room.id" class="btn btn-outline-dark py-2 rounded-pill">View Details</a>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
+        </div>
+
+        @if (ViewBag.TotalPages > 1)
+        {
+            <nav class="mt-5 pb-5">
+                <ul class="pagination justify-content-center border-0">
+
+                    @* Previous Button *@
+                    <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "") mx-1">
+                        <a class="page-link rounded-circle shadow-sm border-0 d-flex align-items-center justify-content-center"
+                           style="width: 45px; height: 45px; color: #333; cursor:pointer;"
+                           hx-get="@Url.Action("BrowseSpaces", new { page = ViewBag.CurrentPage - 1 })"
+                           hx-target="#rooms-container"
+                           hx-push-url="true">
+                            <i class="bi bi-chevron-left"></i>
+                        </a>
+                    </li>
+
+                    @* Page Numbers *@
+                    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                    {
+                        <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "") mx-1">
+                            <a class="page-link rounded-circle shadow-sm border-0 d-flex align-items-center justify-content-center @(i == ViewBag.CurrentPage ? "bg-dark text-white" : "bg-white text-dark")"
+                               style="width: 45px; height: 45px; cursor:pointer;"
+                               hx-get="@Url.Action("BrowseSpaces", new { page = i })"
+                               hx-target="#rooms-container"
+                               hx-push-url="true">
+                                @i
+                            </a>
+                        </li>
+                    }
+
+                    @* Next Button *@
+                    <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "") mx-1">
+                        <a class="page-link rounded-circle shadow-sm border-0 d-flex align-items-center justify-content-center"
+                           style="width: 45px; height: 45px; color: #333; cursor:pointer;"
+                           hx-get="@Url.Action("BrowseSpaces", new { page = ViewBag.CurrentPage + 1 })"
+                           hx-target="#rooms-container"
+                           hx-push-url="true">
+                            <i class="bi bi-chevron-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         }
     </div>
 </div>
-
-<style>
-    .transition-hover:hover {
-        transform: translateY(-5px);
-        transition: 0.3s ease;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
-    }
-</style>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}

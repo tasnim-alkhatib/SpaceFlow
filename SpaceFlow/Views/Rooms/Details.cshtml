@@ -1,4 +1,4 @@
-﻿@model SpaceFlow.Web.ViewModels.RoomViewModel
+﻿@model SpaceFlow.Core.Dtos.RoomDto
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 
@@ -60,7 +60,7 @@
                     <a asp-area="" asp-controller="Home" asp-action="BrowseSpaces" class="btn btn-outline-secondary rounded-pill px-4">
                         <i class="bi bi-arrow-left me-2"></i> Previous
                     </a>
-                    <a asp-area="" asp-controller="Bookings" asp-action="Create" asp-route-spaceId="@Model.id" class="btn btn-outline-primary rounded-pill px-5 shadow">
+                    <a asp-area="" asp-controller="Bookings" asp-action="Create" asp-route-spaceId="@Model.Id" class="btn btn-outline-primary rounded-pill px-5 shadow">
                         Book This Space <i class="bi bi-arrow-right ms-2"></i>
                     </a>
                 }

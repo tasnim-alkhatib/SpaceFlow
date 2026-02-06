@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SpaceFlow.Core.Entities;
-using SpaceFlow.Core.Interfaces;
+using SpaceFlow.Core.IRepository;
 using SpaceFlow.Infrastructure.Data;
 
 namespace SpaceFlow.Infrastructure.Repositories

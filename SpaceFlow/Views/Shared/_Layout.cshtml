@@ -38,12 +38,8 @@
                     @if (User.IsInRole("Admin"))
                     {
                         <a class="nav-link text-dark fw-semibold me-3"
-                           asp-area="Admin" asp-controller="Bookings" asp-action="Index">
-                            System Bookings
-                        </a>
-                        <a class="nav-link text-dark fw-semibold me-3"
-                           asp-area="Admin" asp-controller="Rooms" asp-action="Index">
-                            Manage Rooms
+                           asp-area="Admin" asp-controller="AdminDashboard" asp-action="Overview">
+                            Dashboard
                         </a>
                     }
                     else

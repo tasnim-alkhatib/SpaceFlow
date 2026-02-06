@@ -1,5 +1,5 @@
 ﻿using SpaceFlow.Core.Entities;
-using SpaceFlow.Core.Interfaces;
+using SpaceFlow.Core.IRepository;
 using SpaceFlow.Infrastructure.Data;
 using SpaceFlow.Infrastructure.Repositories;
 

@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SpaceFlow.Core.Interfaces;
+using SpaceFlow.Core.IRepository;
+using SpaceFlow.Core.IServices;
+using SpaceFlow.Core.Services;
 using SpaceFlow.Infrastructure.Data;
+using SpaceFlow.Infrastructure.FileStorage;
 using SpaceFlow.Infrastructure.Seeds;
 using SpaceFlow.Infrastructure.UnitOfWork;
 
@@ -40,6 +43,11 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IBookingService, BookingService>(); 
+builder.Services.AddScoped<IRoomService, RoomService>();
+builder.Services.AddScoped<IFileService, FileService>();
+builder.Services.AddScoped<IDashboardService, DashboardService>(); 
+
 
 var app = builder.Build();
 

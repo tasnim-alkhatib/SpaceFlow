@@ -14,18 +14,7 @@
                 Discover the perfect environment for your creativity and book instantly.
             </p>
 
-            @if (User.IsInRole("Admin"))
-            {
-                <div class="col-md-12 d-flex gap-5 mt-4">
-                <a asp-area="Admin" asp-controller="Bookings" asp-action="Index" class="btn btn-outline-primary btn-lg rounded-pill px-5 shadow-lg">
-                    System Bookings
-                </a>
-                <a asp-area="Admin" asp-controller="Rooms" asp-action="Index" class="btn btn-outline-light btn-lg rounded-pill px-5 shadow-lg">
-                    Manage Rooms
-                </a>
-                </div>
-            }
-            else
+            @if (!User.IsInRole("Admin"))
             {
                 <a asp-controller="Home" asp-action="BrowseSpaces" class="btn btn-primary btn-lg rounded-pill px-5 shadow-lg">
                     Book Now
@@ -40,11 +29,6 @@
                      class="img-fluid rounded-5 shadow-lg w-100"
                      style="object-fit: cover; min-height: 400px;"
                      alt="Office Space">
-
-                @* <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80"
-                     class="img-fluid rounded-5 shadow-lg w-100"
-                     style="object-fit: cover; min-height: 400px;"
-                     alt="Office Space"> *@
             </div>
         </div>
 

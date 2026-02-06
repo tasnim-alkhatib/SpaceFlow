@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SpaceFlow.Core.Enums;
-using SpaceFlow.Core.Interfaces;
+using SpaceFlow.Core.IRepository;
+using SpaceFlow.Core.IServices;
 using SpaceFlow.Web.Areas.Admin.Models;
 using System.Reflection.Metadata.Ecma335;
 
@@ -12,8 +13,13 @@ namespace SpaceFlow.Web.Areas.Admin.Controllers
     public class BookingsController : Controller    
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IBookingService _bookingService;
 
-        public BookingsController(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
+        public BookingsController(IUnitOfWork unitOfWork, IBookingService bookingService) 
+        {
+            _unitOfWork = unitOfWork;
+            _bookingService = bookingService;
+        }
 
         public async Task<IActionResult> Index()
         {

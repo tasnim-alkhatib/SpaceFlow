@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SpaceFlow.Core.Dtos;
 using SpaceFlow.Core.Entities;
-using SpaceFlow.Core.Interfaces;
+using SpaceFlow.Core.IRepository;
+using SpaceFlow.Core.IServices;
+using SpaceFlow.Infrastructure.UnitOfWork;
 using SpaceFlow.Web.ViewModels;
 using System.Security.Claims;
 
@@ -11,12 +14,14 @@ namespace SpaceFlow.Web.Controllers
     [Authorize] 
     public class BookingsController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;   
+        private readonly IBookingService _bookingService;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public BookingsController(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager)
+        public BookingsController(IUnitOfWork unitOfWork, IBookingService bookingService, UserManager<IdentityUser> userManager)
         {
             _unitOfWork = unitOfWork;
+            _bookingService = bookingService;
             _userManager = userManager;
         }
 
@@ -24,7 +29,8 @@ namespace SpaceFlow.Web.Controllers
         public async Task<IActionResult> Create(int spaceId)
         {
             var room = await _unitOfWork.Rooms.GetByIdAsync(spaceId);
-            if(room == null) return NotFound();
+
+            if (room == null) return NotFound();
 
             var viewModel = new BookingViewModel
             {
@@ -33,7 +39,7 @@ namespace SpaceFlow.Web.Controllers
                 RoomImageUrl = room.ImageUrl,
                 PricePerHour = room.PricePerHour,
                 StartTime = DateTime.Now,
-                EndTime = DateTime.Now,
+                EndTime = DateTime.Now
             };
 
             return View(viewModel); 
@@ -43,63 +49,62 @@ namespace SpaceFlow.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(BookingViewModel model)
         {
-            try
+            async Task RePopulateRoomData()
             {
-                if (ModelState.IsValid)
+                var room = await _unitOfWork.Rooms.GetByIdAsync(model.RoomId);
+                if (room != null)
                 {
-                    var overLappingBookings = await _unitOfWork.Bookings.GetOverlappingBookingsAsync(
-                        model.RoomId, model.StartTime, model.EndTime);
-
-                    if (overLappingBookings != null)
-                    {
-                        TempData["ErrorMessage"] = $"This room is already booked from {overLappingBookings.StartTime:HH:mm} to {overLappingBookings.EndTime:HH:mm}.\nPlease choose another date.";
-                        return View(model);
-                    }
-
-                    var duration = (model.EndTime - model.StartTime).TotalHours;
-
-                    var booking = new Booking
-                    {
-                        RoomId = model.RoomId,
-                        UserId = _userManager.GetUserId(User) ?? "",
-                        StartTime = model.StartTime,
-                        EndTime = model.EndTime,
-                        TotalPrice = Math.Round(model.PricePerHour * (decimal)duration, 2), // Default 1 hour
-                        CreatedAt = DateTime.Now
-                    };
-
-                    await _unitOfWork.Bookings.AddAsync(booking);
-                    await _unitOfWork.CompleteAsync();
-                    TempData["SuccessMessage"] = "Booking created successfully!";
-                    return RedirectToAction("MyBookings"); 
+                    model.RoomImageUrl = room.ImageUrl;
+                    model.RoomName = room.Name;
+                    model.PricePerHour = room.PricePerHour;
                 }
             }
-            catch (Exception e)
+
+            if (!ModelState.IsValid)
             {
-                TempData["ErrorMessage"] = $"Error while booking: {e.Message}";
+                await RePopulateRoomData();
+                return View(model);
             }
+
+            var bookingDto = new BookingRequestDto
+            {
+                RoomId = model.RoomId,
+                StartTime = model.StartTime,
+                EndTime = model.EndTime,
+                PricePerHour = model.PricePerHour
+            };
+
+            var userId = _userManager.GetUserId(User) ?? "";
+            var result = await _bookingService.CreateBookingAsync(bookingDto, userId);
+
+            if (result.Success)
+            {
+                TempData["SuccessMessage"] = result.Message;
+                return RedirectToAction(nameof(MyBookings));
+            }
+
+            TempData["ErrorMessage"] = result.Message;
+            await RePopulateRoomData();
             return View(model);
         }
 
         [HttpGet]
         public async Task<IActionResult> MyBookings()
         {
-            var userId = _userManager.GetUserId(User) ?? "";
-            if (userId == null) return Challenge();
+            var userId = _userManager.GetUserId(User);
+            if (string.IsNullOrEmpty(userId)) return Challenge();
 
-            var userBookings = await _unitOfWork.Bookings.GetUserBookingsAsync(userId);
+            var userBookings = await _bookingService.GetUserBookingsAsync(userId);
 
             return View(userBookings);
         }
 
+
         [HttpPost]
         public IActionResult GetPrice(BookingViewModel model)
         {
-            var duration = (model.EndTime - model.StartTime).TotalHours;
-            if (duration <= 0) return Content("0.00 LE");
-
-            var total = (decimal)duration * model.PricePerHour;
-            return Content($"{total:N2} LE"); 
+            var duration = _bookingService.CalculateTotalPrice(model.StartTime, model.EndTime, model.PricePerHour);
+            return Content($"{duration:N2} LE"); 
         }
 
     }
