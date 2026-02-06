@@ -8,7 +8,8 @@
 
 | **Admin Dashboard** | **Room Inventory** |
 |:---:|:---:|
-| <img src="C:\Projects\SpaceFlowPictures\Admin/1AdminDashboard.PNG" width="450" alt="Dashboard Overview"> | <img src="Projects/SpaceFlowPictures/Admin/2ManageRooms.png" width="450" alt="Room Management"> |
+| <img width="2398" height="1395" alt="1AdminDashboard" src="https://github.com/user-attachments/assets/02ae785b-78a9-4241-bc34-371065388b79" />
+<img src="C:\Projects\SpaceFlowPictures\Admin/1AdminDashboard.PNG" width="450" alt="Dashboard Overview"> | <img src="Projects/SpaceFlowPictures/Admin/2ManageRooms.png" width="450" alt="Room Management"> |
 | *Live statistics: Total Revenue, Rooms, and Pending Bookings.* | *Efficient management of workspaces with image previews.* |
 
 | **Edit Room Interface** | **System Actions** |
