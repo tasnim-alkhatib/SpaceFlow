@@ -1,0 +1,88 @@
+﻿@model SpaceFlow.Core.Dtos.AdminDashboardDto
+
+@{
+    ViewData["Title"] = "System Overview";
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-dark mb-4">Dashboard Overview</h2>
+    </div>
+
+    <div class="row g-4 align-items-stretch">
+            <div class="row g-4">
+                <div class="col-lg-3">
+                    <div class="card border-0 shadow-sm rounded-4 bg-primary text-white h-100">
+                        <div class="card-body d-flex align-items-center">
+                            <div class="flex-grow-1" style="height: 150px;">
+                                <h6 class="text-uppercase small fw-bold opacity-75">Total Rooms</h6>
+                                <h3 class="fw-bold mb-0">@Model.TotalRooms</h3>
+                            </div>
+                            <div class="fs-1 opacity-50">
+                                <i class="bi bi-door-open"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <div class="col-lg-3">
+                    <div class="card border-0 shadow-sm rounded-4 bg-success text-white h-100">
+                        <div class="card-body d-flex align-items-center">
+                            <div class="flex-grow-1" style="height: 150px;">
+                                <h6 class="text-uppercase small fw-bold opacity-75">Total Bookings</h6>
+                                <h3 class="fw-bold mb-0">@Model.TotalBookings</h3>
+                            </div>
+                            <div class="fs-1 opacity-50">
+                                <i class="bi bi-calendar-check"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="card border-0 shadow-sm rounded-4 bg-warning text-white h-100">
+                        <div class="card-body d-flex align-items-center">
+                            <div class="flex-grow-1" style="height:150px;">
+                                <h6 class="text-uppercase small fw-bold opacity-75">Active Now</h6>
+                                <h3 class="fw-bold mb-0">@Model.PendingBookings</h3>
+                            </div>
+                            <div class="fs-1 opacity-50">
+                                <i class="bi bi-person-walking"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <div class="col-lg-3">
+                    <div class="card border-0 shadow-sm rounded-4 bg-info text-white h-100">
+                        <div class="card-body d-flex align-items-center">
+                            <div class="flex-grow-1" style="height: 150px;">
+                                <h6 class="text-uppercase small fw-bold opacity-75">Total Revenue</h6>
+                                <h3 class="fw-bold mb-0">@Model.TotalRevenue.ToString("C")</h3>
+                            </div>
+                            <div class="fs-1 opacity-50">
+                                <i class="bi bi-currency-dollar"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <div class="p-5 bg-white rounded-4 shadow-sm border text-center">
+                <h5 class="fw-bold mb-4">Quick Actions</h5>
+
+                <div class="d-flex gap-3 justify-content-center">
+                    <a asp-controller="Bookings" asp-action="Index" class="btn btn-outline-primary rounded-pill px-4 shadow-sm">
+                        <i class="bi bi-list-task me-2"></i> All Bookings
+                    </a>
+                    <a asp-controller="Rooms" asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4 shadow-sm">
+                        <i class="bi bi-list-task me-2"></i> All Rooms
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
