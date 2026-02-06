@@ -8,13 +8,12 @@
 
 | **Admin Dashboard** | **Room Inventory** |
 |:---:|:---:|
-| <img width="2398" height="1395" alt="1AdminDashboard" src="https://github.com/user-attachments/assets/02ae785b-78a9-4241-bc34-371065388b79" />
-<img src="C:\Projects\SpaceFlowPictures\Admin/1AdminDashboard.PNG" width="450" alt="Dashboard Overview"> | <img src="Projects/SpaceFlowPictures/Admin/2ManageRooms.png" width="450" alt="Room Management"> |
+| <img width="2398" height="1395" alt="Dashboard Overview" src="https://github.com/user-attachments/assets/02ae785b-78a9-4241-bc34-371065388b79" /> |<img width="2375" height="1399" alt="Room Management" src="https://github.com/user-attachments/assets/282ec8f9-048a-4700-b180-c5e62ec24e32" /> |
 | *Live statistics: Total Revenue, Rooms, and Pending Bookings.* | *Efficient management of workspaces with image previews.* |
 
 | **Edit Room Interface** | **System Actions** |
 |:---:|:---:|
-| <img src="Projects/SpaceFlowPictures/Admin/4EditRoom.png" width="450" alt="Edit Room View"> | <img src="Projects/SpaceFlowPictures/Admin/7ManageBookings.png" width="450" alt="Quick Actions"> |
+|<img width="2378" height="1395" alt="Room Edit View" src="https://github.com/user-attachments/assets/a0e0b720-a009-4f30-977f-f5ec85e940b0" /> | <img width="2374" height="1395" alt="Booking Edit View" src="https://github.com/user-attachments/assets/a5e51c90-075e-4f4f-813e-7e451cbef340" /> |
 | *Advanced form handling with image upload and validation.* | *Quick navigation for administrative tasks.* |
 
 ---
